@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jaehyun Kim - Automotive Project Manager & HCI Researcher</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/gsap.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        :root {
+            --mercedes-silver: #242424;
+            --bmw-blue: #0066B1;
+            --premium-gold: #B49A5D;
+            --light-gray: #F7F7F7;
+            --dark-gray: #333333;
+            --white: #FFFFFF;
+            --black: #000000;
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--dark-gray);
+            line-height: 1.6;
+            letter-spacing: 0.3px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: rgba(255, 255, 255, 0.98);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 300;
+            color: var(--mercedes-silver);
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: var(--bmw-blue);
+            font-weight: 500;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 50px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-gray);
+            font-weight: 400;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--bmw-blue);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+                        url('/api/placeholder/1920/1080') center/cover;
+            color: var(--white);
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(0,0,0,0.8), transparent);
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 300;
+            margin-bottom: 30px;
+            line-height: 1.2;
+            letter-spacing: 2px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            font-weight: 300;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Career Section */
+        .career {
+            padding: 120px 0;
+            background: var(--light-gray);
+        }
+
+        .career-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .company-card {
+            background: var(--white);
+            padding: 40px;
+            border: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .company-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--bmw-blue), var(--premium-gold));
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .company-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .company-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        .company-logo {
+            height: 40px;
+            margin-bottom: 30px;
+            object-fit: contain;
+        }
+
+        .company-card h3 {
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: var(--mercedes-silver);
+            margin-bottom: 15px;
+        }
+
+        .company-card .position {
+            color: var(--bmw-blue);
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .company-card .period {
+            color: var(--dark-gray);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .achievement-list {
+            list-style: none;
+        }
+
+        .achievement-list li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .achievement-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 6px;
+            height: 6px;
+            background: var(--premium-gold);
+            border-radius: 50%;
+        }
+
+        /* Projects Section */
+        .projects {
+            padding: 120px 0;
+            background: var(--white);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 80px;
+            letter-spacing: 2px;
+            color: var(--mercedes-silver);
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+        }
+
+        .project-card {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 16/9;
+            background: var(--mercedes-silver);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s;
+        }
+
+        .project-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 40px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
+            color: var(--white);
+            transform: translateY(100%);
+            transition: all 0.5s;
+        }
+
+        .project-card:hover .project-image {
+            transform: scale(1.1);
+            opacity: 0.7;
+        }
+
+        .project-card:hover .project-content {
+            transform: translateY(0);
+        }
+
+        .project-content h3 {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 15px;
+            color: var(--premium-gold);
+        }
+
+        .project-content p {
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* Expertise Section */
+        .expertise {
+            padding: 120px 0;
+            background: var(--mercedes-silver);
+            color: var(--white);
+        }
+
+        .expertise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .expertise-card {
+            padding: 40px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s;
+        }
+
+        .expertise-card:hover {
+            background: rgba(255,255,255,0.05);
+            border-color: var(--premium-gold);
+        }
+
+        .expertise-card h3 {
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: var(--premium-gold);
+            margin-bottom: 20px;
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-list li {
+            margin-bottom: 15px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .skill-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 6px;
+            height: 6px;
+            background: var(--bmw-blue);
+            border-radius: 50%;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 120px 0;
+            background: var(--white);
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--mercedes-silver);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1.5px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-bottom: 1px solid var(--dark-gray);
+            background: transparent;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--bmw-blue);
+        }
+
+        .btn {
+            padding: 15px 40px;
+            background: var(--mercedes-silver);
+            color: var(--white);
+            border: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: var(--bmw-blue);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--black);
+            color: var(--white);
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        footer p {
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 1024px) {
+            .career-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .expertise-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .career-grid,
+            .expertise-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container nav-content">
+            <div class="logo">JAE<span>HYUN</span></div>
+            <div class="nav-links">
+                <a href="#career">Career</a>
+                <a href="#projects">Projects</a>
+                <a href="#expertise">Expertise</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Driving Innovation in Premium Automotive</h1>
+            <p>From Renault to German Engineering Excellence — Specializing in Project Management and Human-Machine Interface Design</p>
+            <button class="btn">View Portfolio</button>
+        </div>
+    </section>
+
+    <section id="career" class="career">
+        <div class="container">
+            <h2 class="section-title">Professional Journey</h2>
+            <div class="career-grid">
+                <div class="company-card fade-in">
+                    <img src="/api/placeholder/200/80" alt="Renault Logo" class="company-logo">
+                    <h3>Renault Korea Motors</h3>
+                    <div class="position">Senior Project Manager</div>
+                    <div class="period">2021 - Present</div>
+                    <ul class="achievement-list">
+                        <li>Led UX/UI development for new vehicle platforms</li>
+                        <li>Managed cross-functional teams of 15+ members</li>
+                        <li>Improved user satisfaction scores by 40%</li>
+                        <li>Successfully delivered 5 major HMI projects</li>
+                    </ul>
+                </div>
+                
+                <div class="company-card fade-in">
+                    <img src="/api/placeholder/200/80" alt="Previous Company" class="company-logo">
+                    <h3>Automotive Research Institute</h3>
+                    <div class="position">HCI Research Lead</div>
+                    <div class="period">2019 - 2021</div>
+                    <ul class="achievement-list">
+                        <li>Published research on premium vehicle interfaces</li>
+                        <li>Developed innovative testing methodologies</li>
+                        <li>Collaborated with luxury automotive brands</li>
+                        <li>Led international research initiatives</li>
+                    
